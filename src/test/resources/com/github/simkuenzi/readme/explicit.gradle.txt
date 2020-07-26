@@ -1,0 +1,13 @@
+import java.nio.charset.StandardCharsets
+
+plugins {
+    id 'com.github.simkuenzi.readme'
+}
+
+readme {
+    readmeFile = file('finalFiles/myReadme.md')
+    templateFile = file('templates/README-template.md')
+    propertiesFile = file('props/model.properties')
+    overwrite = false
+    encoding = StandardCharsets.ISO_8859_1
+}
