@@ -33,12 +33,22 @@ public class ReadmeGradlePlugin implements Plugin<Project> {
                 () -> config.getOverwrite().get()
         ));
 
-        project.getTasks().register("updateProperties", new ThymeleafTask(
+        project.getTasks().register("updateReleaseReadme", new ThymeleafTask(
+                "Generates the README.md",
+                templateEngine,
+                () -> config.getTemplateFile().get(),
+                () -> config.getReleasePropertiesFile().get(),
+                () -> config.getReadmeFile().get(),
+                () -> config.getEncoding().get(),
+                () -> config.getOverwrite().get()
+        ));
+
+        project.getTasks().register("updateReleaseProperties", new ThymeleafTask(
                 "Generates the properties file.",
                 templateEngine,
                 () -> config.getPropertiesTemplateFile().get(),
                 () -> config.getPropertiesFile().get(),
-                () -> config.getPropertiesFile().get(),
+                () -> config.getReleasePropertiesFile().get(),
                 () -> config.getEncoding().get(),
                 () -> config.getOverwrite().get()
         ));

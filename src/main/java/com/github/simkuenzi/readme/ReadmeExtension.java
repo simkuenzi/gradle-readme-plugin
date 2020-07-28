@@ -14,18 +14,21 @@ public class ReadmeExtension {
     private final Property<File> templateFile;
     private final Property<File> propertiesTemplateFile;
     private final Property<File> propertiesFile;
+    private final Property<File> releasePropertiesFile;
     private final Property<Boolean> overwrite;
     private final Property<String> encoding;
 
     public ReadmeExtension(ObjectFactory objectFactory, Project project) {
         readmeFile = objectFactory.property(File.class);
         propertiesTemplateFile = objectFactory.property(File.class);
-        propertiesTemplateFile.set(project.getRootDir().toPath().resolve(Path.of("src", "readme", "data.properties.txt")).toFile());
+        propertiesTemplateFile.set(project.getRootDir().toPath().resolve(Path.of("src", "readme", "release.properties.txt")).toFile());
         readmeFile.set(project.getRootDir().toPath().resolve("README.md").toFile());
         templateFile = objectFactory.property(File.class);
         templateFile.set(project.getRootDir().toPath().resolve(Path.of("src", "readme", "README.md")).toFile());
         propertiesFile = objectFactory.property(File.class);
         propertiesFile.set(project.getRootDir().toPath().resolve("gradle.properties").toFile());
+        releasePropertiesFile = objectFactory.property(File.class);
+        releasePropertiesFile.set(project.getRootDir().toPath().resolve(Path.of("src", "readme", "release.properties")).toFile());
         encoding = objectFactory.property(String.class);
         encoding.set("UTF-8");
         overwrite = objectFactory.property(Boolean.class);
@@ -62,6 +65,14 @@ public class ReadmeExtension {
 
     public void setPropertiesFile(File propertiesFile) {
         this.propertiesFile.set(propertiesFile);
+    }
+
+    public Property<File> getReleasePropertiesFile() {
+        return releasePropertiesFile;
+    }
+
+    public void setReleasePropertiesFile(File releasePropertiesFile) {
+        this.releasePropertiesFile.set(releasePropertiesFile);
     }
 
     public Property<String> getEncoding() {
