@@ -153,6 +153,7 @@ public class ReadmeGradlePluginTest {
                 .build();
     }
 
+
     @Test
     public void releaseDefaults() throws Exception {
         setup(
