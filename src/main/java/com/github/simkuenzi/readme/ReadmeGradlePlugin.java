@@ -60,5 +60,81 @@ public class ReadmeGradlePlugin implements Plugin<Project> {
                 }
             });
         });
+
+        project.getTasks().register("updateReleaseData", task -> {
+            task.setGroup("documentation");
+            task.setDescription("Generates the README.md");
+
+            FileTemplateResolver templateResolver = new FileTemplateResolver();
+            templateResolver.setCacheable(false);
+            templateResolver.setForceTemplateMode(true);
+            templateResolver.setTemplateMode(TemplateMode.TEXT);
+            TemplateEngine templateEngine = new TemplateEngine();
+            templateEngine.setTemplateResolver(templateResolver);
+
+            task.doLast(exec -> {
+                Path dataFile = config.getPropertiesFile().get().toPath();
+                if (Files.exists(dataFile) && !config.getOverwrite().get()) {
+                    throw new GradleException(String.format(
+                            "%s already exists. Configure overwrite = true to overwrite an existing file.", config.getReadmeFile().get()));
+                }
+
+                try {
+                    Properties properties = new Properties();
+                    try (Reader propertiesIn = new FileReader(config.getPropertiesFile().get(), Charset.forName(config.getEncoding().get()))) {
+                        properties.load(propertiesIn);
+                    }
+
+                    Map<String, Object> vars = new HashMap<>();
+                    properties.forEach((key, value) -> vars.put(key.toString(), value));
+                    Context context = new Context(Locale.US, vars);
+
+                    Files.createDirectories(dataFile.getParent());
+                    try (Writer writer = Files.newBufferedWriter(dataFile, Charset.forName(config.getEncoding().get()))) {
+                        templateEngine.process(config.getPropertiesTemplateFile().get().toString(), context, writer);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
+
+        project.getTasks().register("updateProperties", task -> {
+            task.setGroup("documentation");
+            task.setDescription("Generates the README.md");
+
+            FileTemplateResolver templateResolver = new FileTemplateResolver();
+            templateResolver.setCacheable(false);
+            templateResolver.setForceTemplateMode(true);
+            templateResolver.setTemplateMode(TemplateMode.TEXT);
+            TemplateEngine templateEngine = new TemplateEngine();
+            templateEngine.setTemplateResolver(templateResolver);
+
+            task.doLast(exec -> {
+                Path dataFile = config.getPropertiesFile().get().toPath();
+                if (Files.exists(dataFile) && !config.getOverwrite().get()) {
+                    throw new GradleException(String.format(
+                            "%s already exists. Configure overwrite = true to overwrite an existing file.", config.getReadmeFile().get()));
+                }
+
+                try {
+                    Properties properties = new Properties();
+                    try (Reader propertiesIn = new FileReader(config.getPropertiesFile().get(), Charset.forName(config.getEncoding().get()))) {
+                        properties.load(propertiesIn);
+                    }
+
+                    Map<String, Object> vars = new HashMap<>();
+                    properties.forEach((key, value) -> vars.put(key.toString(), value));
+                    Context context = new Context(Locale.US, vars);
+
+                    Files.createDirectories(dataFile.getParent());
+                    try (Writer writer = Files.newBufferedWriter(dataFile, Charset.forName(config.getEncoding().get()))) {
+                        templateEngine.process(config.getPropertiesTemplateFile().get().toString(), context, writer);
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
     }
 }

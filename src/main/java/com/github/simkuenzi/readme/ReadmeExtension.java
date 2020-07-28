@@ -12,12 +12,15 @@ public class ReadmeExtension {
 
     private final Property<File> readmeFile;
     private final Property<File> templateFile;
+    private final Property<File> propertiesTemplateFile;
     private final Property<File> propertiesFile;
     private final Property<Boolean> overwrite;
     private final Property<String> encoding;
 
     public ReadmeExtension(ObjectFactory objectFactory, Project project) {
         readmeFile = objectFactory.property(File.class);
+        propertiesTemplateFile = objectFactory.property(File.class);
+        propertiesTemplateFile.set(project.getRootDir().toPath().resolve(Path.of("src", "readme", "data.properties.txt")).toFile());
         readmeFile.set(project.getRootDir().toPath().resolve("README.md").toFile());
         templateFile = objectFactory.property(File.class);
         templateFile.set(project.getRootDir().toPath().resolve(Path.of("src", "readme", "README.md")).toFile());
@@ -43,6 +46,14 @@ public class ReadmeExtension {
 
     public void setTemplateFile(File templateFile) {
         this.templateFile.set(templateFile);
+    }
+
+    public Property<File> getPropertiesTemplateFile() {
+        return propertiesTemplateFile;
+    }
+
+    public void setPropertiesTemplateFile(File propertiesTemplateFile) {
+        this.propertiesTemplateFile.set(propertiesTemplateFile);
     }
 
     public Property<File> getPropertiesFile() {

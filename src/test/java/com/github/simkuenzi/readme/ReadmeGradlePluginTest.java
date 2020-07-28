@@ -97,6 +97,27 @@ public class ReadmeGradlePluginTest {
         assertOutput(testProjectDir.getRoot().toPath().resolve("README.md"));
     }
 
+    @Test
+    public void release() throws Exception {
+        setup(
+                file("release.gradle.txt", "build.gradle"),
+                file("releaseTemplate.md", "README.md"),
+                file("releaseTemplate.md", "src/readme/README.md"),
+                file("gradle.properties", "src/readme/data.properties"),
+                file("data.properties.txt", "src/readme/data.properties.txt")
+        );
+
+        GradleRunner.create()
+                .forwardOutput()
+                .withProjectDir(testProjectDir.getRoot())
+                .withArguments("updateProperties", "readme", "--stacktrace")
+                .withPluginClasspath()
+                .build()
+                .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
+
+        assertOutput(testProjectDir.getRoot().toPath().resolve("README.md"));
+    }
+
     private void assertOutput(Path actual) throws IOException {
         String expected = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("expected.md")))
                 .lines().collect(Collectors.joining(System.lineSeparator()));
