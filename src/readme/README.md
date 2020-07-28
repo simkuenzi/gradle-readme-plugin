@@ -1,4 +1,5 @@
 # README Plugin for Gradle
+![Java CI with Gradle](https://github.com/simkuenzi/gradle-readme-plugin/workflows/Java%20CI%20with%20Gradle/badge.svg)
 
 ## Summary
 Generates the `README.md` using a [Thymeleaf](https://www.thymeleaf.org/) template.
