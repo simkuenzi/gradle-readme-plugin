@@ -52,6 +52,7 @@ public class ReadmeGradlePluginTest {
                 .withProjectDir(testProjectDir.getRoot())
                 .withArguments("readme", "--stacktrace")
                 .withPluginClasspath()
+                .withDebug(true)
                 .build()
                 .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
 
