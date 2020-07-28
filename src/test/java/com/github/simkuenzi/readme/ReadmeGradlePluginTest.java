@@ -135,8 +135,26 @@ public class ReadmeGradlePluginTest {
                 .build();
     }
 
+    @Test(expected = UnexpectedBuildFailure.class)
+    public void overwriteReleasePropertiesFail() throws Exception {
+        setup(
+                file("defaults.gradle.txt", "build.gradle"),
+                file("gradle.properties", "gradle.properties"),
+                file("gradle.properties", "src/readme/release.properties"),
+                file("release.properties.txt", "src/readme/release.properties.txt")
+        );
+
+        GradleRunner.create()
+                .forwardOutput()
+                .withDebug(true)
+                .withProjectDir(testProjectDir.getRoot())
+                .withArguments("updateReleaseProperties", "--stacktrace")
+                .withPluginClasspath()
+                .build();
+    }
+
     @Test
-    public void release() throws Exception {
+    public void releaseDefaults() throws Exception {
         setup(
                 file("overwrite.gradle.txt", "build.gradle"),
                 file("gradle.properties", "gradle.properties"),
@@ -167,6 +185,41 @@ public class ReadmeGradlePluginTest {
                         )
                 ),
                 checkFile("expected.md", "README.md")
+        );
+    }
+
+    @Test
+    public void releaseExplicit() throws Exception {
+        setup(
+                file("explicit.gradle.txt", "build.gradle"),
+                file("releaseTemplate.md", "templates/README-template.md"),
+                file("release.properties.txt", "templates/release-template.properties"),
+                file("gradle.properties", "props/model.properties")
+        );
+
+        GradleRunner.create()
+                .forwardOutput()
+                .withDebug(true)
+                .withProjectDir(testProjectDir.getRoot())
+                .withArguments("updateReleaseProperties", "updateReleaseReadme", "--stacktrace")
+                .withPluginClasspath()
+                .build()
+                .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
+
+        assertDir(
+                checkFile("explicit.gradle.txt", "build.gradle"),
+                checkDir("templates",
+                        checkFile("releaseTemplate.md", "README-template.md"),
+                        checkFile("release.properties.txt", "release-template.properties")
+                ),
+                checkDir("props",
+                        checkFile("gradle.properties", "model.properties"),
+                        checkFile("release.properties", "release.properties")
+                ),
+                checkDir("finalFiles",
+                        checkFile("expected.md", "myReadme.md")
+                ),
+                noCheck(".gradle")
         );
     }
 

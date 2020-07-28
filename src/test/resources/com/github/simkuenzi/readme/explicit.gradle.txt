@@ -8,6 +8,8 @@ readme {
     readmeFile = file('finalFiles/myReadme.md')
     templateFile = file('templates/README-template.md')
     propertiesFile = file('props/model.properties')
+    propertiesTemplateFile = file('templates/release-template.properties')
+    releasePropertiesFile = file('props/release.properties')
     overwrite = false
     encoding = StandardCharsets.ISO_8859_1
 }
