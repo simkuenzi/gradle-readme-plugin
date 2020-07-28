@@ -2,6 +2,7 @@
 # README Plugin for Gradle
 
 ![Java CI with Gradle](https://github.com/simkuenzi/gradle-readme-plugin/workflows/Java%20CI%20with%20Gradle/badge.svg)
+![Codecov](https://img.shields.io/codecov/c/github/simkuenzi/gradle-readme-plugin)
 ![GitHub](https://img.shields.io/github/license/simkuenzi/gradle-readme-plugin)
 
 ## Summary
