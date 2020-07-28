@@ -7,7 +7,7 @@ Generates the `README.md` using a [Thymeleaf](https://www.thymeleaf.org/) templa
 Configure the plugin in your `build.gradle` file.
 ```groovy
 plugins {
-    id 'com.github.simkuenzi.readme' version '0.0'
+    id 'com.github.simkuenzi.readme' version '0.1'
 }
 
 readme {
@@ -48,7 +48,7 @@ The snippet below shows, how to use the README Plugin together with the
 ```groovy
 plugins {
     id 'net.researchgate.release' version '2.8.1'
-    id 'com.github.simkuenzi.readme' version '0.0'
+    id 'com.github.simkuenzi.readme' version '0.1'
 }
 
 release {
