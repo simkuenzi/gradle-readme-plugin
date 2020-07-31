@@ -4,6 +4,7 @@
 ![Java CI with Gradle](https://github.com/simkuenzi/gradle-readme-plugin/workflows/Java%20CI%20with%20Gradle/badge.svg)
 ![Codecov](https://img.shields.io/codecov/c/github/simkuenzi/gradle-readme-plugin)
 ![GitHub](https://img.shields.io/github/license/simkuenzi/gradle-readme-plugin)
+![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?label=Gradle+Plugin&color=blue&metadataUrl=https://plugins.gradle.org/m2/com/github/simkuenzi/gradle-readme-plugin/maven-metadata.xml)
 
 ## Summary
 Generates the `README.md` using a [Thymeleaf](https://www.thymeleaf.org/) template.
